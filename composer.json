@@ -1,0 +1,7 @@
+{
+	"require": {
+		"silex/silex": "*",
+		"monolog/monolog": "*",
+		"twig/twig": "*"
+	}
+}
