@@ -1,0 +1,10 @@
+<html>
+<head>
+</head>
+<body>
+    {% for message in messages %}
+    <li style='display:inline'>{{ message.getSubject() }} {{ message.getMessageBody(true)|raw }} </li>
+    {% endfor %}
+</form>
+</body>
+</html>

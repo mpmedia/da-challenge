@@ -2,3 +2,4 @@ da-challenge.sublime-workspace
 da-challenge.sublime-project
 composer.lock
 vendor/*
+log/*
