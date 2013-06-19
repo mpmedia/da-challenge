@@ -1,7 +1,13 @@
 {
 	"require": {
+		"symfony/form": "~2.3",
 		"silex/silex": "*",
 		"monolog/monolog": "*",
-		"twig/twig": "*"
+		"twig/twig": "*",
+		"symfony/validator": "~2.3",
+		"symfony/config": "~2.3",
+		"symfony/translation": "~2.3",
+		"symfony/locale": "~2.3",
+		"symfony/twig-bridge": "~2.3"
 	}
 }
