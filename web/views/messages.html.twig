@@ -1,0 +1,6 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+{% for message in messages %}
+<div class="panel">{{ message.getSubject() }} {{ message.getMessageBody(true)|raw }} </div>
+{% endfor %}
+{% endblock %}
