@@ -1,10 +1,6 @@
-<html>
-<head>
-</head>
-<body>
-    {% for message in messages %}
-    <li style='display:inline'>{{ message.getSubject() }} {{ message.getMessageBody(true)|raw }} </li>
-    {% endfor %}
-</form>
-</body>
-</html>
+{% extends 'base.twig' %}
+{% block content %}
+{% for message in messages %}
+<div class="panel">{{ message.getSubject() }} {{ message.getMessageBody(true)|raw }} </div>
+{% endfor %}
+{% endblock %}

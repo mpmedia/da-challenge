@@ -1,11 +1,7 @@
-<html>
-<head>
-</head>
-<body>
-	<form action="#" method="post">
-	{{ form_widget(form) }}
+{% extends 'base.twig' %}
+{% block content %}
+    <form action="#" method="post">
+    {{ form_widget(form) }}
 
-	<input type="submit" name="submit" />
-</form>
-</body>
-</html>
+    <input type="submit" class="button" name="submit" />
+{% endblock %}
