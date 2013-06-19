@@ -37,6 +37,7 @@ $app->get('/messages', function(Symfony\Component\HttpFoundation\Request $reques
 });
 
 $app->error(function (\Exception $e, $code) use ($app) {
+    $app['monolog']->addDebug('Error with code '.$code);
     switch ($code) {
         case 404:
         $message = 'The requested page could not be found.';
