@@ -1,6 +1,3 @@
 {% extends 'base.html.twig' %}
 {% block content %}
-{% for key, message in messages %}
-<div class="panel"><a href="/message/{{ key }}">{{ dump(message.body) }}</a></div>
-{% endfor %}
 {% endblock %}

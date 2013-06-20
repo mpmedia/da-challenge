@@ -10,5 +10,8 @@
 		"symfony/locale": "~2.3",
 		"symfony/twig-bridge": "~2.3",
 		"tedivm/fetch": "*"
+		},
+	"autoload": {
+		"psr-0": {"DarwinAnalytics": "src/"}
 	}
 }

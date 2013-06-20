@@ -16,7 +16,16 @@ $app->match('/', function (Symfony\Component\HttpFoundation\Request $request) us
         $form->bind($request);
 
         if ($form->isValid()) {
+            // setup the Mailr and share it for the rest of the application
 
+            $app['mailr'] = $app->share( function() use($form) {
+                return new DarwinAnalytics\Mailr('{imap.gmail.com:993/imap/ssl}','INBOX',$form->getData()['email'],$form->getData()['password']);
+            });
+
+            // if all went okay redirect to /messages
+            $request = Symfony\Component\HttpFoundation\Request::create('/messages', 'GET');
+            return print_r($app['mailr']->getMailHeaders());
+            /*
             $app['monolog']->addDebug('Fetching mails for '.$form->getData()['email'].'.');
             
             if($inbox = imap_open('{imap.gmail.com:993/imap/ssl}INBOX',$form->getData()['email'],$form->getData()['password'])) {
@@ -39,8 +48,7 @@ $app->match('/', function (Symfony\Component\HttpFoundation\Request $request) us
                 return $app->handle($request); 
             } else {
                 throw new Exception(imap_last_error().'.', 1);
-                
-            }
+            }*/
         }
     }
     return $app['twig']->render('index.html.twig', array('form' => $form->createView()));
@@ -48,7 +56,7 @@ $app->match('/', function (Symfony\Component\HttpFoundation\Request $request) us
 
 $app->get('/messages', function(Symfony\Component\HttpFoundation\Request $request) use ($app) {
     return $app['twig']->render('messages.html.twig', array(
-        'messages' => $request->get('messages')
+        //'messages' => $request->get('messages')
         ));
 });
 
