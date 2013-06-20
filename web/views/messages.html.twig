@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block content %}
-{% for message in messages %}
-<div class="panel">{{ message.getSubject() }} {{ message.getMessageBody(true)|raw }} </div>
+{% for key, message in messages %}
+<div class="panel"><a href="/message/{{ key }}">{{ dump(message.body) }}</a></div>
 {% endfor %}
 {% endblock %}

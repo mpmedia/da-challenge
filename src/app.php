@@ -18,22 +18,38 @@ $app->match('/', function (Symfony\Component\HttpFoundation\Request $request) us
         if ($form->isValid()) {
 
             $app['monolog']->addDebug('Fetching mails for '.$form->getData()['email'].'.');
+            
+            if($inbox = imap_open('{imap.gmail.com:993/imap/ssl}INBOX',$form->getData()['email'],$form->getData()['password'])) {
 
-            $fetch = new Fetch\Server('imap.gmail.com', 993);
-            $fetch->setAuthentication($form->getData()['email'], $form->getData()['password']);
+                $all = imap_search($inbox, 'ALL');
+                $messages = array();
 
-            $request = Symfony\Component\HttpFoundation\Request::create('/messages', 'GET', array(
-                'messages' => $fetch->getMessages()
-                ));
+                if($all) {
+                    foreach($all as $messageNumber) {
+                        $overview = imap_fetch_overview($all, $messageNumber, 0);
+                        $messages[$messageNumber]->body = imap_fetchstructure($inbox, $messageNumber);
+                        $messages[$messageNumber]->subject = $overview[0]->subject;
+                    }
+                }
 
-            return $app->handle($request);
+                $request = Symfony\Component\HttpFoundation\Request::create('/messages', 'GET', array(
+                    'messages' => $messages
+                    ));
+
+                return $app->handle($request); 
+            } else {
+                throw new Exception(imap_last_error().'.', 1);
+                
+            }
         }
     }
     return $app['twig']->render('index.html.twig', array('form' => $form->createView()));
 });
 
 $app->get('/messages', function(Symfony\Component\HttpFoundation\Request $request) use ($app) {
-    return $app['twig']->render('messages.html.twig', array('messages' => $request->get('messages')));
+    return $app['twig']->render('messages.html.twig', array(
+        'messages' => $request->get('messages')
+        ));
 });
 
 $app->error(function (\Exception $e, $code) use ($app) {
