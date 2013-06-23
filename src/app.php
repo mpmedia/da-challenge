@@ -18,13 +18,17 @@ $app->match('/', function (Symfony\Component\HttpFoundation\Request $request) us
         if ($form->isValid()) {
             // setup the Mailr and share it for the rest of the application
 
-            $app['mailr'] = $app->share( function() use($form) {
+            /*$app['mailr'] = $app->share( function() use($form) {
                 return new DarwinAnalytics\Mailr('{imap.gmail.com:993/imap/ssl}','INBOX',$form->getData()['email'],$form->getData()['password']);
-            });
+            });*/
+
+            $app->register(new DarwinAnalytics\Provider\ImapServiceProvider(), array(
+                'imap.provider' => '{imap.gmail.com:993/imap/ssl}'
+            ));
 
             // if all went okay redirect to /messages
             $request = Symfony\Component\HttpFoundation\Request::create('/messages', 'GET');
-            return print_r($app['mailr']->getMailHeaders());
+            return print_r($app['imap']);
             /*
             $app['monolog']->addDebug('Fetching mails for '.$form->getData()['email'].'.');
             
