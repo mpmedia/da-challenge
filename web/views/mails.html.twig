@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+{% for mail in mails %}
+<ul class="vcard">
+    <li class="fn">{{ mail.from.0.personal }} </li>
+    <li class="subject">{{ mail.subject }} </li>
+    <li class="date"><h6 class="subheader"> {{ mail.date }} </h6></li>
+    {# <li class="email">{{ mail.from.0.mailbox }}@{{ mail.from.0.host }}</li> #}
+</ul>
+{% endfor %}
+{% endblock %}
