@@ -20,6 +20,7 @@ $app->match('/', function (Symfony\Component\HttpFoundation\Request $request) us
             // use the service provider for imap injection
             $app->register(new DarwinAnalytics\Provider\ImapServiceProvider());
 
+            // open up the imap stream
             $app['imap']->open('{imap.gmail.com:993/imap/ssl}', $form->getData()['email'], $form->getData()['password']);
 
             $request = Symfony\Component\HttpFoundation\Request::create('/mails', 'GET');
@@ -35,6 +36,12 @@ $app->get('/mails', function(Symfony\Component\HttpFoundation\Request $request) 
         'mails' => $app['imap']->getMailHeaders()
         ));
 });
+
+/*$app->get('/mail/{uid}', function($uid) use ($app) {
+    return $app['twig']->render('mail.html.twig', array(
+        'mail' => 'TEST_OBJECT'
+        ));
+});*/
 
 $app->error(function (\Exception $e, $code) use ($app) {
     return new Symfony\Component\HttpFoundation\Response($app['twig']->render('404.html.twig', array( 'content' => $e->getMessage())), $code);

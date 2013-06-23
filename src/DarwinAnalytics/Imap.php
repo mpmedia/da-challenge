@@ -33,7 +33,8 @@ class Imap {
             $mails[$uid] = array(
                 'subject' => $header->subject,
                 'date' => date('G:i:s, j F Y', $header->udate),
-                'from' => $header->from
+                'from' => $header->from,
+                'uid' => $uid
                 ); 
         }
         return $mails;
