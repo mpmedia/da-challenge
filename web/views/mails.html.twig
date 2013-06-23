@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block content %}
 {% for mail in mails %}
-<a href="#" data-reveal-id="reveal">
+<a href="/mail/{{ mail.uid }}">
     <ul class="vcard">
         <li class="fn">{{ mail.from.0.personal }} </li>
         <li class="subject">{{ mail.subject }} </li>
@@ -12,11 +12,7 @@
 {% endfor %}
 {% endblock %}
 {% block reveal %}
-<div id="reveal" class="reveal-modal">
-    <h2>Awesome. I have it.</h2>
-    <p class="lead">Your couch.  It is mine.</p>
-    <p>Im a cool paragraph that lives inside of an even cooler modal. Wins</p>
-    <a class="close-reveal-modal">&#215;</a>
+{# <div id="reveal" class="reveal-modal">
 </div>
 <script>
 document.write('<script src=/js/vendor/'
@@ -27,7 +23,7 @@ document.write('<script src=/js/vendor/'
 <script src="/js/foundation/foundation.reveal.js"></script>
 <script>
 $(function(){
-    $(document).foundation();    
+    $(document).foundation();
 })
-</script>
+</script> #}
 {% endblock %}

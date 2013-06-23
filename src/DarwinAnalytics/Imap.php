@@ -5,6 +5,7 @@ namespace DarwinAnalytics;
 class Imap {
 
     private $imapStream;
+    private static $count = 0;
 
     public function __construct() {
     }
@@ -20,8 +21,15 @@ class Imap {
         imap_close($this->imapStream);
     }
 
+    public function isOpen() {
+        return $this->isOpen;
+    }
+
     public function getMailHeaders($limit = null) {
         $imapStream = $this->imapStream;
+        if(!isset($imapStream)) {
+            throw new \Exception('Imap stream is not open');
+        }
         $mails = array();
 
         $numberOfMails = imap_num_msg($imapStream);
@@ -41,6 +49,14 @@ class Imap {
     }
 
     public function getMail($uid) {
+        $imapStream = $this->imapStream;
+        if(!isset($imapStream)) {
+            throw new \Exception('Imap stream is not open');
+        }
         return imap_fetchstructure($this->imapStream, $uid, FT_UID);
+    }
+
+    public function getImapStream() {
+        return $this->imapStream;
     }
 }

@@ -12,7 +12,7 @@ $app->register(new Silex\Provider\ValidatorServiceProvider());
 
 $app->register(new Silex\Provider\TranslationServiceProvider(), array(
     'translator.messages' => array(),
-));
+    ));
 
 $app->register(new Silex\Provider\MonologServiceProvider(), array(
 	'monolog.logfile' => __DIR__.'/../log/development.log'
@@ -25,5 +25,8 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 		)
 	));
 $app['twig']->addExtension(new Twig_Extension_Debug());
+
+echo "Why is this echoed after every single request? Should this be like that?!?!";
+$app->register(new DarwinAnalytics\Provider\ImapServiceProvider());
 
 return $app;
